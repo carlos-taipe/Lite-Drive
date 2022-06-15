@@ -18,6 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CarpetaController::class, 'index']);
 
-Route::resource('carpetas', CarpetaController::class)->except(['create']);
+Route::resource('carpetas', CarpetaController::class)->except(['create','edit','update']);
 
-Route::resource('archivos',ArchivoController::class)->except(['create']);
+Route::resource('archivos',ArchivoController::class)->only(['store','destroy']);
