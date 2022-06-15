@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\CarpetaController;
+use App\Models\Archivo;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CarpetaController::class, 'index']);
 
-Route::resource('carpetas', CarpetaController::class);
+Route::resource('carpetas', CarpetaController::class)->except(['create']);
+
+Route::resource('archivos',ArchivoController::class)->except(['create']);

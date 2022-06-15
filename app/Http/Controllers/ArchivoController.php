@@ -2,25 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carpeta;
+use App\Models\Archivo;
 use Illuminate\Http\Request;
 
-class CarpetaController extends Controller
+class ArchivoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $carpeta = Carpeta::find(1);
-
-        return view('carpeta.show',[
-            'carpeta' => $carpeta
-        ]);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -29,11 +15,20 @@ class CarpetaController extends Controller
      */
     public function store(Request $request)
     {
-        $nombreCarpeta = $request->input('nombreCarpeta');
+        $archivo = $request->file('archivo');
         $carpetaPadreId = $request->input('carpetaPadreId');
+        $nombreArchivo = $request->input('nombreArchivo');
+
+        //Obtengo la extension para la parte front donde decidir que iconos colocar.
+        $extensionArchivo = $archivo->extension();
+        $nombreArchivo = $nombreArchivo.'.'.$extensionArchivo;
+
+        $url = $request->file('archivo')->store('archivos');
         
-        Carpeta::create([
-            'nombre' => $nombreCarpeta,
+        Archivo::create([
+            'nombre' => $nombreArchivo,
+            'url' => $url,
+            'extension' => $extensionArchivo,
             'carpeta_id' => $carpetaPadreId,
         ]);
 
@@ -48,11 +43,7 @@ class CarpetaController extends Controller
      */
     public function show($id)
     {
-        $carpeta = Carpeta::find($id);
-
-        return view('carpeta.show',[
-            'carpeta' => $carpeta
-        ]);
+        //
     }
 
     /**

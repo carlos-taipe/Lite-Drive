@@ -50,8 +50,8 @@
                         <div class="modal-body">
                                 <input type="hidden" name="carpetaPadreId" value="{{$carpeta->id}}">
                                 <div class="form-group">
-                                    <label for="carpetaName" class="col-form-label">Nombre de Carpeta:</label>
-                                    <input type="text" class="form-control" id="carpetaName" name="carpetaName">
+                                    <label for="nombreCarpeta" class="col-form-label">Nombre de Carpeta:</label>
+                                    <input type="text" class="form-control" id="nombreCarpeta" name="nombreCarpeta">
                                 </div>
                             
                         </div>
@@ -67,27 +67,33 @@
         <!-- Subir Archivo Modal -->
         <div class="modal fade" id="subirArchivoModal" tabindex="-1" role="dialog" aria-labelledby="subirArchivoLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form method="GET" action="{{route('carpetas.index')}}">
+                <form enctype="multipart/form-data" method="POST" action="{{route('archivos.store')}}">
+                    @csrf
                     <div class="modal-content">
                         <div class="modal-header bg-dark text-white">
                             <h5 class="modal-title" id="nuevaCarpetaLabel">Subir Archivo</h5>
                             <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                        
+                                <input type="hidden" name="carpetaPadreId" value="{{$carpeta->id}}"> 
+                                <div class="form-group">
+                                    <label for="nombreArchivo" class="col-form-label">Nombre del Archivo:</label>
+                                    <input type="text" required class="form-control" id="nombreArchivo" name="nombreArchivo">
+                                </div>  
                                 <div class="mb-3">
-                                    <label for="file" class="col-form-label">Seleccionar archivo:</label>
-                                    <input type="file" class="form-control" id="file" accept="image/png, image/jpg, image/jpeg, image/webp, image/svg,.pdf">
+                                    <label for="archivo" class="col-form-label">Seleccionar archivo:</label>
+                                    <input type="file" max-size="2000" required class="form-control" id="archivo" name="archivo" accept=".png, .jpg, .jpeg, .webp, .svg,.pdf">
                                 </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Crear</button>
+                            <button type="submit" class="btn btn-primary" onclick="return verificarArchivo()">Crear</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="{{asset('js/verificarArchivo.js')}}"></script>
     </body>
 </html>

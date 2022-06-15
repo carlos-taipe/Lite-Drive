@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Carpeta;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCarpetaTable extends Migration
+class CreateArchivoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,20 +13,16 @@ class CreateCarpetaTable extends Migration
      */
     public function up()
     {
-        Schema::create('carpeta', function (Blueprint $table) {
+        Schema::create('archivo', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->unsignedBigInteger('carpeta_id')->nullable();
+            $table->string('url',500);
+            $table->char('extension',5);
+            $table->unsignedBigInteger('carpeta_id');
 
             $table->foreign('carpeta_id')->references('id')->on('carpeta')->onDelete('cascade');
             $table->timestamps();
         });
-
-        //Crearemos una carpeta global que contendra todo nuestra información
-
-        $carpeta_master = new Carpeta;
-        $carpeta_master->nombre = 'Carpeta Master';
-        $carpeta_master->save();
     }
 
     /**
@@ -37,6 +32,6 @@ class CreateCarpetaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carpeta');
+        Schema::dropIfExists('archivo');
     }
 }
